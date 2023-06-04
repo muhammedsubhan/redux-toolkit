@@ -1,6 +1,6 @@
 export interface Posts {
-  userId: Number;
-  it: Number;
+  userId: String;
+  id: String;
   title: String;
   body: String;
 }
