@@ -8,9 +8,38 @@ export const PostsApi = createApi({
   }),
   endpoints: (builder) => ({
     posts: builder.query<Posts[], void>({
-      query: () => "posts",
+      query: () => "/posts",
+    }),
+    post: builder.query<Posts, String>({
+      query: (id) => `/posts/${id}`,
+    }),
+    addPost: builder.mutation<void, Posts>({
+      query: (post) => ({
+        url: "/posts",
+        method: "POST",
+        body: post,
+      }),
+    }),
+    updatePost: builder.mutation<void, Posts>({
+      query: ({ id, ...rest }) => ({
+        url: `/posts/${id}`,
+        method: "PUT",
+        body: rest,
+      }),
+    }),
+    deletePost: builder.mutation<void, String>({
+      query: (id) => ({
+        url: `/posts/${id}`,
+        method: "DELETE",
+      }),
     }),
   }),
 });
 
-export const { usePostsQuery } = PostsApi;
+export const {
+  usePostsQuery,
+  usePostQuery,
+  useAddPostMutation,
+  useUpdatePostMutation,
+  useDeletePostMutation,
+} = PostsApi;
