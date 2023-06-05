@@ -1,5 +1,9 @@
 import React from "react";
-import { usePostQuery, usePostsQuery } from "./services/PostsApi";
+import {
+  useAddPostMutation,
+  usePostQuery,
+  usePostsQuery,
+} from "./services/PostsApi";
 
 const App = () => {
   const { data, error, isLoading, isFetching, isSuccess } = usePostsQuery();
@@ -26,6 +30,9 @@ const App = () => {
             })}
           </div>
         )}
+        <div>
+          <AddContact />
+        </div>
       </div>
     </>
   );
@@ -38,6 +45,29 @@ export const PostDetail = ({ id }: { id: String }) => {
     <>
       <div>
         <pre>{JSON.stringify(data, undefined, 2)}</pre>
+      </div>
+    </>
+  );
+};
+
+export const AddContact = () => {
+  const [AddContact] = useAddPostMutation();
+
+  const contact = {
+    userId: "1",
+    id: "111",
+    title: "New Title",
+    body: "New Body",
+  };
+
+  const addHandler = async () => {
+    await AddContact(contact);
+  };
+
+  return (
+    <>
+      <div>
+        <button onClick={addHandler}>Add Button</button>
       </div>
     </>
   );

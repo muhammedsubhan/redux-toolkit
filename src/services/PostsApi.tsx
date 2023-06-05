@@ -6,12 +6,15 @@ export const PostsApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: "https://jsonplaceholder.typicode.com/",
   }),
+  tagTypes: ["Posts"],
   endpoints: (builder) => ({
     posts: builder.query<Posts[], void>({
       query: () => "/posts",
+      providesTags: ["Posts"],
     }),
     post: builder.query<Posts, String>({
       query: (id) => `/posts/${id}`,
+      providesTags: ["Posts"],
     }),
     addPost: builder.mutation<void, Posts>({
       query: (post) => ({
@@ -19,6 +22,7 @@ export const PostsApi = createApi({
         method: "POST",
         body: post,
       }),
+      invalidatesTags: ["Posts"],
     }),
     updatePost: builder.mutation<void, Posts>({
       query: ({ id, ...rest }) => ({
@@ -26,12 +30,14 @@ export const PostsApi = createApi({
         method: "PUT",
         body: rest,
       }),
+      invalidatesTags: ["Posts"],
     }),
     deletePost: builder.mutation<void, String>({
       query: (id) => ({
         url: `/posts/${id}`,
         method: "DELETE",
       }),
+      invalidatesTags: ["Posts"],
     }),
   }),
 });
